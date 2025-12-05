@@ -27,9 +27,11 @@ function App() {
   }, []);
 
   if(loading){
-    return( <div className = "app-title">
-              Ładowanie danych pogodowych...
-            </div>
+    return( 
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <div className="loading-text">Ładowanie danych pogodowych...</div>
+      </div>
     )
   }
 

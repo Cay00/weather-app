@@ -1,5 +1,5 @@
 import WeatherDetails from "./weatherDetails.jsx";
-import {useParams} from 'react-router-dom';
+import {useParams, Link} from 'react-router-dom';
 function CityDetailPage({miasta}){
 
     const {cityId} = useParams();
@@ -8,13 +8,15 @@ function CityDetailPage({miasta}){
 
     if(!miasto){
         return(
-            <div>   
+            <div className="error-page">
                 <h2>Nie znaleziono miasta</h2>
+                <Link to="/" className="back-button">← Powrót do strony głównej</Link>
             </div>
         )
     } 
     return(
         <div>   
+            <Link to="/" className="back-button">← Powrót do strony głównej</Link>
             <WeatherDetails miasto={miasto}/>
         </div>
     )
