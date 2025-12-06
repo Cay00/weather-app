@@ -1,6 +1,6 @@
 import WeatherDetails from "./weatherDetails.jsx";
 import {useParams, Link} from 'react-router-dom';
-import { useFavorites } from '../contexts/FavoritesContext.jsx';
+import { useFavorites } from '../hooks/useFavorites.js';
 
 function CityDetailPage({miasta}){
 

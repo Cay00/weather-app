@@ -8,7 +8,6 @@ import CityDetailPage from './components/CityDetailPage.jsx'
 import FavoritesPage from './FavoritesPage.jsx'
 import { store } from './store/store.js'
 import { useTemperature } from './hooks/useTemperature.js'
-import { FavoritesProvider } from './contexts/FavoritesContext.jsx'
 
 
 function TemperatureToggle() {
@@ -57,8 +56,7 @@ function App() {
   return (
     <>
       <Provider store={store}>
-        <FavoritesProvider>
-          <BrowserRouter>
+        <BrowserRouter>
             <div className="app-header">
               <Navigation />
               <TemperatureToggle />
@@ -76,7 +74,6 @@ function App() {
               </Routes>
             )}
           </BrowserRouter>
-        </FavoritesProvider>
       </Provider>
     </>
   )

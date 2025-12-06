@@ -1,13 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+// Ładowanie jednostki temperatury z localStorage
+const loadTemperatureUnitFromStorage = () => {
+  try {
+    const savedUnit = localStorage.getItem('temperatureUnit');
+    if (savedUnit === 'C' || savedUnit === 'F') {
+      return savedUnit;
+    }
+  } catch (e) {
+    console.error('Error loading temperature unit from localStorage:', e);
+  }
+  return 'C'; // Domyślnie Celsius
+};
+
 const temperatureSlice = createSlice({
   name: 'temperature',
   initialState: {
-    unit: 'C', // 'C' for Celsius, 'F' for Fahrenheit
+    unit: loadTemperatureUnitFromStorage(),
   },
   reducers: {
     toggleUnit: (state) => {
       state.unit = state.unit === 'C' ? 'F' : 'C';
+      // Zapisywanie do localStorage
+      localStorage.setItem('temperatureUnit', state.unit);
+    },
+    setUnit: (state, action) => {
+      state.unit = action.payload;
+      localStorage.setItem('temperatureUnit', state.unit);
     },
   },
 });

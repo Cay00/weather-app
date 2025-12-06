@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import './App.css'
 import WeatherCard from './components/WeatherCard.jsx'
 import WeatherDetails from './components/weatherDetails.jsx'
-import { useFavorites } from './contexts/FavoritesContext.jsx'
+import { useFavorites } from './hooks/useFavorites.js'
 import { useTemperature } from './hooks/useTemperature.js'
 
 function FavoritesPage({miasta}) {
