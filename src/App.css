@@ -99,17 +99,40 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.details-row.main-info {
+  margin-bottom: 2rem;
+  gap: 2rem;
+}
+
+.details-row.secondary-info {
+  gap: 1.5rem;
+}
+
+.details-row.precipitation-info {
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.weather-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .details-item {
   text-align: center;
-  padding: 0.75rem;
+  padding: 0.75rem 1.25rem;
   background: rgba(255, 255, 255, 0.6);
   border-radius: 10px;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  min-width: 140px;
+  flex: 0 1 auto;
 }
 
 .details-item:hover {
@@ -239,8 +262,21 @@ input[type="text"]::placeholder {
   }
 
   .details-row {
-    flex-direction: column;
+    flex-direction: row;
     gap: 1rem;
+    justify-content: center;
+  }
+
+  .details-row.main-info,
+  .details-row.secondary-info,
+  .details-row.precipitation-info {
+    gap: 1rem;
+  }
+
+  .details-item {
+    min-width: 120px;
+    flex: 1 1 calc(33.333% - 1rem);
+    max-width: 200px;
   }
 }
 
@@ -450,5 +486,128 @@ input[type="text"]::placeholder {
   }
   50% {
     opacity: 0.5;
+  }
+}
+
+/* Header z nawigacją i przyciskiem temperatury */
+.app-header {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Nawigacja */
+.main-navigation {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.nav-link {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.nav-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+/* Przycisk ulubionych */
+.favorite-button {
+  transition: transform 0.2s ease;
+}
+
+.favorite-button:hover {
+  transform: scale(1.2);
+}
+
+.favorite-button-large {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.favorite-button-large:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+/* Przycisk przełączania temperatury */
+
+.temperature-toggle {
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  min-width: 60px;
+}
+
+.temperature-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.temperature-toggle:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    top: 0.5rem;
+    right: 0.5rem;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+  
+  .main-navigation {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .nav-link {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  .temperature-toggle {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    min-width: 50px;
+  }
+
+  .favorite-button-large {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
   }
 }

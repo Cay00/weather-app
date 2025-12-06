@@ -1,4 +1,15 @@
-function WeatherCard({miasto, temperatura, pogoda, wiatr, selected, onClick}){
+import { useTemperature } from '../contexts/TemperatureContext.jsx';
+import { useFavorites } from '../contexts/FavoritesContext.jsx';
+
+function WeatherCard({miasto, temperatura, pogoda, wiatr, selected, onClick, cityId}){
+    const { convertTemperature, getUnitSymbol } = useTemperature();
+    const { isFavorite, toggleFavorite } = useFavorites();
+    
+    const handleFavoriteClick = (e) => {
+        e.stopPropagation(); // Zapobiega wywołaniu onClick karty
+        toggleFavorite(cityId);
+    };
+    
     const getWeatherIcon = (pogoda) => {
         const pogodaLower = pogoda.toLowerCase();
         if (pogodaLower.includes('słonecznie')) {
@@ -26,7 +37,8 @@ function WeatherCard({miasto, temperatura, pogoda, wiatr, selected, onClick}){
                 cursor: 'pointer',
                 minWidth: '200px',
                 backgroundColor: selected ? '#e3f2fd' : '#f5f5f5',
-                transition: 'transform 0.2s, box-shadow 0.2s'
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                position: 'relative'
             }}
             onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'scale(1.05)'
@@ -37,6 +49,24 @@ function WeatherCard({miasto, temperatura, pogoda, wiatr, selected, onClick}){
                 e.currentTarget.style.boxShadow = 'none'
             }}
         >
+            <button
+                onClick={handleFavoriteClick}
+                className="favorite-button"
+                title={isFavorite(cityId) ? 'Usuń z ulubionych' : 'Dodaj do ulubionych'}
+                style={{
+                    position: 'absolute',
+                    top: '0.5rem',
+                    right: '0.5rem',
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '1.5rem',
+                    cursor: 'pointer',
+                    padding: '0.25rem',
+                    zIndex: 10
+                }}
+            >
+                {isFavorite(cityId) ? '❤️' : '🤍'}
+            </button>
             <h2 style={{
                 marginTop: 0, 
                 marginBottom: '1rem',
@@ -52,7 +82,7 @@ function WeatherCard({miasto, temperatura, pogoda, wiatr, selected, onClick}){
                 {getWeatherIcon(pogoda)}
             </div>
             <p style={{fontSize: '1.5rem', fontWeight: 'bold', margin: '0.5rem 0'}}>
-                {temperatura}°C
+                {convertTemperature(temperatura)}{getUnitSymbol()}
             </p>
             <p style={{margin: '0.5rem 0'}}>{pogoda}</p>
         </div>

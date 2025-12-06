@@ -3,9 +3,11 @@ import './App.css'
 import WeatherCard from './components/WeatherCard.jsx'
 import WeatherDetails from './components/weatherDetails.jsx' 
 import { Link } from 'react-router-dom'
+import { useTemperature } from './contexts/TemperatureContext.jsx'
 
 
 function HomePage({miasta}) {
+  const { convertTemperature, getUnitSymbol } = useTemperature();
 
   const [wybraneMiasto, setWybraneMiasto] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -71,15 +73,15 @@ function HomePage({miasta}) {
       <div className="stats-container">
         <div className="stat-card">
           <div className="stat-label">Najcieplejsze</div>
-          <div className="stat-value">{najcieplejsze?.miasto}: {najcieplejsze?.temperatura}°C</div>
+          <div className="stat-value">{najcieplejsze?.miasto}: {convertTemperature(najcieplejsze?.temperatura)}{getUnitSymbol()}</div>
         </div>
         <div className="stat-card">
           <div className="stat-label">Najzimniejsze</div>
-          <div className="stat-value">{najzimniejsze?.miasto}: {najzimniejsze?.temperatura}°C</div>
+          <div className="stat-value">{najzimniejsze?.miasto}: {convertTemperature(najzimniejsze?.temperatura)}{getUnitSymbol()}</div>
         </div>
         <div className="stat-card">
           <div className="stat-label">Średnia temperatura</div>
-          <div className="stat-value">{sredniaTemp}°C</div>
+          <div className="stat-value">{convertTemperature(parseFloat(sredniaTemp))}{getUnitSymbol()}</div>
         </div>
       </div>
 
@@ -130,6 +132,7 @@ function HomePage({miasta}) {
                   wiatr={dane.wiatr}
                   selected={wybraneMiasto && wybraneMiasto.miasto === dane.miasto}
                   onClick={() => handleClick(dane)}
+                  cityId={dane.id}
                 />
                 <Link 
                   to={`/miasto/${dane.id}`} 
