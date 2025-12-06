@@ -1,16 +1,110 @@
-# React + Vite
+# Aplikacja Pogodowa 🌤️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplikacja webowa do wyświetlania informacji pogodowych dla stolic województw w Polsce. Zbudowana z React, Redux i React Router.
 
-Currently, two official plugins are available:
+## ✨ Funkcjonalności
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Wyświetlanie pogody dla 16 stolic województw** - Warszawa, Kraków, Gdańsk, Wrocław, Poznań, Bydgoszcz, Lublin, Zielona Góra, Łódź, Opole, Rzeszów, Białystok, Katowice, Kielce, Olsztyn, Szczecin
+- **Szczegółowe informacje pogodowe**:
+  - Temperatura (z możliwością przełączania między °C i °F)
+  - Warunki pogodowe
+  - Prędkość i kierunek wiatru
+  - Zachmurzenie
+  - Prawdopodobieństwo opadów, rodzaj i ilość opadów
+  - 5-dniowa prognoza pogody
+- **Ulubione miasta** - oznaczanie miast jako ulubione za pomocą ikony serca
+- **Filtrowanie i sortowanie** - wyszukiwanie miast, filtrowanie po warunkach pogodowych, sortowanie po nazwie lub temperaturze
+- **Statystyki** - najcieplejsze i najzimniejsze miasto, średnia temperatura
+- **Przełączanie jednostek temperatury** - globalne przełączanie między Celsius a Fahrenheit
+- **Zachowanie ustawień** - ulubione miasta i wybrana jednostka temperatury są zapisywane w localStorage
 
-## React Compiler
+## 🛠️ Technologie
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19** - biblioteka do budowy interfejsu użytkownika
+- **Redux Toolkit** - zarządzanie globalnym stanem aplikacji (temperatura, ulubione miasta)
+- **React Router** - nawigacja między podstronami
+- **React Router DOM** - routing w aplikacji
+- **Vite** - narzędzie do budowania i rozwoju aplikacji
+- **localStorage** - przechowywanie ustawień użytkownika w przeglądarce
 
-## Expanding the ESLint configuration
+## 📦 Instalacja
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Sklonuj repozytorium:
+```bash
+git clone <url-repozytorium>
+cd weather-app
+```
+
+2. Zainstaluj zależności:
+```bash
+npm install
+```
+
+## 🚀 Uruchomienie
+
+### Tryb deweloperski
+```bash
+npm run dev
+```
+Aplikacja będzie dostępna pod adresem `http://localhost:5173`
+
+### Budowanie produkcyjne
+```bash
+npm run build
+```
+
+### Podgląd zbudowanej aplikacji
+```bash
+npm run preview
+```
+
+## 📁 Struktura projektu
+
+```
+src/
+├── components/          # Komponenty reużywalne
+│   ├── WeatherCard.jsx      # Karta pogodowa miasta
+│   ├── weatherDetails.jsx   # Szczegóły pogody
+│   └── CityDetailPage.jsx   # Strona szczegółów miasta
+├── store/               # Redux store
+│   ├── store.js              # Konfiguracja Redux store
+│   ├── temperatureSlice.js   # Slice dla jednostki temperatury
+│   └── favoritesSlice.js     # Slice dla ulubionych miast
+├── hooks/               # Custom hooks
+│   ├── useTemperature.js    # Hook do zarządzania temperaturą
+│   └── useFavorites.js      # Hook do zarządzania ulubionymi
+├── HomePage.jsx         # Strona główna
+├── FavoritesPage.jsx    # Strona ulubionych miast
+├── App.jsx              # Główny komponent aplikacji
+└── weatherdata.jsx      # Dane pogodowe miast
+```
+
+## 🎯 Główne funkcjonalności techniczne
+
+### Redux Store
+- **temperatureSlice** - zarządza jednostką temperatury (C/F) z automatycznym zapisem do localStorage
+- **favoritesSlice** - zarządza listą ulubionych miast z automatycznym zapisem do localStorage
+
+### React Hooks
+- **useState** - zarządzanie stanem lokalnym komponentów
+- **useReducer** - zarządzanie widokiem szczegółowym miasta
+- **useEffect** - efekty uboczne (ładowanie danych, localStorage)
+- **useMemo** - optymalizacja obliczeń (filtrowanie, sortowanie, statystyki)
+- **useCallback** - optymalizacja funkcji callback
+
+### React Router
+- `/` - strona główna z listą wszystkich miast
+- `/miasto/:cityId` - szczegóły wybranego miasta
+- `/ulubione` - lista ulubionych miast
+
+## 💾 Przechowywanie danych
+
+Aplikacja wykorzystuje **localStorage** przeglądarki do przechowywania:
+- `temperatureUnit` - wybrana jednostka temperatury ('C' lub 'F')
+- `favoriteCities` - tablica ID ulubionych miast
+
+Dane są automatycznie przywracane po odświeżeniu strony.
+
+## 📝 Licencja
+
+Ten projekt jest projektem edukacyjnym.
