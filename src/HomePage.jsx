@@ -1,21 +1,51 @@
-import { useState, useMemo, useCallback } from 'react'
+import { useReducer, useMemo, useCallback, useState } from 'react'
 import './App.css'
 import WeatherCard from './components/WeatherCard.jsx'
 import WeatherDetails from './components/weatherDetails.jsx' 
 import { Link } from 'react-router-dom'
-import { useTemperature } from './contexts/TemperatureContext.jsx'
+import { useTemperature } from './hooks/useTemperature.js'
 
+// Reducer dla zarządzania widokiem szczegółowym
+const viewReducer = (state, action) => {
+  switch (action.type) {
+    case 'SELECT_CITY':
+      return {
+        ...state,
+        selectedCity: action.payload,
+        showDetails: true
+      };
+    case 'CLOSE_DETAILS':
+      return {
+        ...state,
+        selectedCity: null,
+        showDetails: false
+      };
+    case 'TOGGLE_DETAILS':
+      return {
+        ...state,
+        showDetails: !state.showDetails,
+        selectedCity: state.showDetails ? null : state.selectedCity
+      };
+    default:
+      return state;
+  }
+};
+
+const initialState = {
+  selectedCity: null,
+  showDetails: false
+};
 
 function HomePage({miasta}) {
   const { convertTemperature, getUnitSymbol } = useTemperature();
 
-  const [wybraneMiasto, setWybraneMiasto] = useState(null);
+  const [viewState, dispatch] = useReducer(viewReducer, initialState);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('nazwa'); // 'nazwa', 'temperatura-rosnąco', 'temperatura-malejąco'
   const [filterPogoda, setFilterPogoda] = useState('wszystkie');
   
   const handleClick = useCallback((miasto) => {
-    setWybraneMiasto(miasto);
+    dispatch({ type: 'SELECT_CITY', payload: miasto });
   }, []);
 
   const filteredMiasta = useMemo(() => {
@@ -130,7 +160,7 @@ function HomePage({miasta}) {
                   temperatura={dane.temperatura}
                   pogoda={dane.pogoda}
                   wiatr={dane.wiatr}
-                  selected={wybraneMiasto && wybraneMiasto.miasto === dane.miasto}
+                  selected={viewState.selectedCity && viewState.selectedCity.miasto === dane.miasto}
                   onClick={() => handleClick(dane)}
                   cityId={dane.id}
                 />
@@ -147,8 +177,16 @@ function HomePage({miasta}) {
         </div>
       )}
 
-      {wybraneMiasto && (
-        <WeatherDetails miasto={wybraneMiasto} />
+      {viewState.showDetails && viewState.selectedCity && (
+        <div>
+          <button 
+            onClick={() => dispatch({ type: 'CLOSE_DETAILS' })}
+            className="close-details-button"
+          >
+            ✕ Zamknij szczegóły
+          </button>
+          <WeatherDetails miasto={viewState.selectedCity} />
+        </div>
       )}
     </>
   )

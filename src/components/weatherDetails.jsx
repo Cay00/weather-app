@@ -1,5 +1,5 @@
 import WeatherIcon from "../WeatherIcon.jsx";
-import { useTemperature } from '../contexts/TemperatureContext.jsx';
+import { useTemperature } from '../hooks/useTemperature.js';
 
 function WeatherDetails({ miasto }){
     const { convertTemperature, getUnitSymbol } = useTemperature();

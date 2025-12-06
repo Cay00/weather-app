@@ -1,4 +1,4 @@
-import { useTemperature } from '../contexts/TemperatureContext.jsx';
+import { useTemperature } from '../hooks/useTemperature.js';
 import { useFavorites } from '../contexts/FavoritesContext.jsx';
 
 function WeatherCard({miasto, temperatura, pogoda, wiatr, selected, onClick, cityId}){

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import {BrowserRouter, Route, Routes, Link} from 'react-router-dom'
+import { Provider } from 'react-redux'
 import './App.css'
 import miasta from './weatherdata.jsx'
 import HomePage from './HomePage.jsx'
 import CityDetailPage from './components/CityDetailPage.jsx'
 import FavoritesPage from './FavoritesPage.jsx'
-import { TemperatureProvider, useTemperature } from './contexts/TemperatureContext.jsx'
+import { store } from './store/store.js'
+import { useTemperature } from './hooks/useTemperature.js'
 import { FavoritesProvider } from './contexts/FavoritesContext.jsx'
 
 
@@ -54,7 +56,7 @@ function App() {
 
   return (
     <>
-      <TemperatureProvider>
+      <Provider store={store}>
         <FavoritesProvider>
           <BrowserRouter>
             <div className="app-header">
@@ -75,7 +77,7 @@ function App() {
             )}
           </BrowserRouter>
         </FavoritesProvider>
-      </TemperatureProvider>
+      </Provider>
     </>
   )
 }

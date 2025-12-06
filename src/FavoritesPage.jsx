@@ -4,7 +4,7 @@ import './App.css'
 import WeatherCard from './components/WeatherCard.jsx'
 import WeatherDetails from './components/weatherDetails.jsx'
 import { useFavorites } from './contexts/FavoritesContext.jsx'
-import { useTemperature } from './contexts/TemperatureContext.jsx'
+import { useTemperature } from './hooks/useTemperature.js'
 
 function FavoritesPage({miasta}) {
   const { favorites, isFavorite } = useFavorites();
